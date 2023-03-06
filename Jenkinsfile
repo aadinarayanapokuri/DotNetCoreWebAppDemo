@@ -55,7 +55,7 @@ stage('Docker') {
                     def ecsParams = [
                         region: AWS_DEFAULT_REGION,
                         cluster: AWS_ECS_CLUSTER,
-                        service: ECS_SERVICE,
+                        service: AWS_ECS_SERVICE,
                         image: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/$IMAGE_NAME",
                         forceNewDeployment: true
                     ]
