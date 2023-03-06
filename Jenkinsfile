@@ -10,13 +10,13 @@ pipeline {
   IMAGE_TAG="${DATE}.${BUILD_NUMBER}"
   REPOSITORY_URI = "670166063118.dkr.ecr.ap-northeast-1.amazonaws.com/ecr"
   AWS_ECR_REGION = 'ap-northeast-1'
-  AWS_ECS_SERVICE = 'web-application'
-  AWS_ECS_TASK_DEFINITION = 'net-application'
+  AWS_ECS_SERVICE = 'demo_service'
+  AWS_ECS_TASK_DEFINITION = 'demo'
   AWS_ECS_COMPATIBILITY = 'FARGATE'
   AWS_ECS_NETWORK_MODE = 'awsvpc'
   AWS_ECS_CPU = '256'
   AWS_ECS_MEMORY = '512'
-  AWS_ECS_CLUSTER = 'dotnet-application'
+  AWS_ECS_CLUSTER = 'demo'
   AWS_ECS_TASK_DEFINITION_PATH = 'adi.json'
    }  
  stages {  
@@ -49,16 +49,20 @@ stage('Docker') {
          }
         }
       }
-    stage('Update ECS Task Definition') {
-      steps {
-        sh "aws ecs register-task-definition --family demo-task-def --container-definitions file://container-definition-update-image.json"
-      }
-    }
-    stage('Update ECS Service') {
-      steps {
-        sh "aws ecs update-service --cluster demo --service demo-ecs-service --task-definition demo-task-def"
-      }
-    }
+    stage('Deploy to ECS') {
+            steps {
+                script {
+                    def ecsParams = [
+                        region: AWS_DEFAULT_REGION,
+                        cluster: AWS_ECS_CLUSTER,
+                        service: ECS_SERVICE,
+                        image: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/$IMAGE_NAME",
+                        forceNewDeployment: true
+                    ]
+                    ecsDeployUpdate(serviceParams: ecsParams)
+                }
+            }
+        }
   /* stage('Deploy in ECS') {
   steps {
       script {
@@ -68,5 +72,11 @@ stage('Docker') {
       }
       }
     } */
+   post {
+        always {
+            withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                sh "aws ecs update-service --region ${AWS_DEFAULT_REGION} --cluster $ECS_CLUSTER --service $ECS_SERVICE --desired-count 1"
+            }
+        }
 }
 }
