@@ -78,5 +78,6 @@ stage('Docker') {
                 sh "aws ecs update-service --region ${AWS_DEFAULT_REGION} --cluster $ECS_CLUSTER --service $ECS_SERVICE --desired-count 1"
             }
         }
-
+   }
+ }
 }
