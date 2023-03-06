@@ -51,12 +51,12 @@ stage('Docker') {
       }
     stage('Update ECS Task Definition') {
       steps {
-        sh "aws ecs register-task-definition --family demo-task-def --container-definitions file://demo-container-def.json"
+        sh "aws ecs register-task-definition --family demo-task-def --container-definitions file://container-definition-update-image.json"
       }
     }
     stage('Update ECS Service') {
       steps {
-        sh "aws ecs update-service --cluster demo-ecs-cluster --service demo-ecs-service --task-definition demo-task-def"
+        sh "aws ecs update-service --cluster demo --service demo-ecs-service --task-definition demo-task-def"
       }
     }
   /* stage('Deploy in ECS') {
