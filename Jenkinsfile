@@ -63,6 +63,7 @@ stage('Docker') {
                 }
             }
         }
+ }
   /* stage('Deploy in ECS') {
   steps {
       script {
@@ -77,7 +78,7 @@ stage('Docker') {
             withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                 sh "aws ecs update-service --region ${AWS_DEFAULT_REGION} --cluster $ECS_CLUSTER --service $ECS_SERVICE --desired-count 1"
             }
+          }
         }
-   }
- }
+   
 }
