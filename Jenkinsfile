@@ -59,7 +59,7 @@ stage('Docker') {
                         image: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/$IMAGE_TAG",
                         forceNewDeployment: true
                     ]
-                    ecsDeployUpdate(serviceParams: ecsParams)
+                   
                 }
             }
         }
