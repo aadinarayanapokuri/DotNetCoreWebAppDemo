@@ -1,7 +1,7 @@
 {
 “containerDefinitions”: [
 {
-“name”: “dotnet-application”,
+“name”: “aspnetcorewebapp_container”,
 “image”: “${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}”,
 “cpu”: 0,
 “portMappings”: [
@@ -20,7 +20,7 @@
 “requiresCompatibilities”: [
 “FARGATE”
 ],
-“family”: “dotnet-application”,
+“family”: “aspnetcorewebapp_taskdefinition”,
 “networkMode”: “bridge”,
 “cpu”: “128”,
 “memory”: “512”
