@@ -39,7 +39,7 @@ stage('Docker') {
      steps{  
          script {
                 sh """docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"""
-                sh """docker push ${ECR_URL}/${IMAGE_REPO_NAME}:${IMAGE_TAG}"""
+                sh """docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"""
          }
         }
       }
@@ -47,7 +47,7 @@ stage('Docker') {
   stage('Deploy in ECS') {
   steps {
    //sh "aws ecs register-task-definition --cli-input-json file://${AWS_ECS_TASK_DEFINITION_PATH}"
-   sh "aws ecs update-service --cluster ${AWS_ECS_CLUSTER} --service ${AWS_ECS_SERVICE} --force-new-deployment --image ${ECR_URL}/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+   sh "aws ecs update-service --cluster ${AWS_ECS_CLUSTER} --service ${AWS_ECS_SERVICE} --force-new-deployment --image ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
       
       }
     }
