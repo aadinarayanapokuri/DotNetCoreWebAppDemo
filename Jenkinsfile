@@ -36,7 +36,7 @@ pipeline {
             steps {
                // withCredentials([awsEcr(credentialsId: 'your-aws-credentials-id', region: AWS_REGION)]) {
                     sh "docker tag $IMAGE_REPO_NAME:$IMAGE_TAG ${ECR_URL}/$IMAGE_REPO_NAME:$IMAGE_TAG"
-                    sh "docker push ${ECR_URL}/$IMAGE_REPO_NAME:$IMAGE_TAG"
+                    sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_URL}/$IMAGE_REPO_NAME:$IMAGE_TAG"
             }
         }
         stage('Update ECS Service') {
