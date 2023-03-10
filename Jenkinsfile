@@ -10,7 +10,7 @@ pipeline {
   AWS_ECR_REGION = 'ap-northeast-1'
   AWS_ECS_SERVICE = 'dotnetcoreapp-service'
   AWS_ECS_CLUSTER = 'dotnetcoreapp-cluster'
-  AWS_ECS_TASK_DEFINITION_PATH = 'container-definition-update-image.json'
+  AWS_ECS_TASK_DEFINITION_PATH = 'task_definition.json'
    }  
  stages {  
   stage('Logging into AWS ECR') {
