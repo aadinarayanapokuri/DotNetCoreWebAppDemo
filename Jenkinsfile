@@ -32,8 +32,8 @@ pipeline {
 stage('Docker') {
     steps {    
       script {
-         // dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
-          dockerImage = docker.build "${IMAGE_REPO_NAME}:v1"
+          dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+          //dockerImage = docker.build "${IMAGE_REPO_NAME}:v1"
         } 
         }            
         }
@@ -50,10 +50,10 @@ stage('Docker') {
  
   stage('Deploy in ECS') {
   steps {
-   //sh "aws ecs register-task-definition --cli-input-json file://${AWS_ECS_TASK_DEFINITION_PATH}"
+   sh "aws ecs register-task-definition --cli-input-json file://${AWS_ECS_TASK_DEFINITION_PATH}"
    //sh "aws ecs update-service --cluster ${AWS_ECS_CLUSTER} --service ${AWS_ECS_SERVICE} --force-new-deployment --image ${ECR_URL}/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
    // sh "aws ecs update-service --cluster ${AWS_ECS_CLUSTER} --service ${AWS_ECS_SERVICE} --force-new-deployment --image ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
-    sh "aws ecs update-service --cluster ${AWS_ECS_CLUSTER} --service ${AWS_ECS_SERVICE} --force-new-deployment"  
+   // sh "aws ecs update-service --cluster ${AWS_ECS_CLUSTER} --service ${AWS_ECS_SERVICE} --force-new-deployment"  
       }
     }
 }  
