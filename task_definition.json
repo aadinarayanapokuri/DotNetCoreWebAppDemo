@@ -1,19 +1,82 @@
 {
-    "family": "flask-signup",
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-1:670166063118:task-definition/dotnetcoreapp-td:1",
     "containerDefinitions": [
         {
-            "image": "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}:",
-            "name": "net-application",
-            "cpu": 10,
-            "memory": 256,
-            "essential": true,
+            "name": "dotnetcoreapp-container",
+            "image": "670166063118.dkr.ecr.ap-northeast-1.amazonaws.com/ecr:23.3.30",
+            "cpu": 0,
             "portMappings": [
                 {
-                    "containerPort": 5000,
-                    "hostPort": 80
+                    "name": "dotnetcoreapp-container-80-tcp",
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
                 }
-            ]
+            ],
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/dotnetcoreapp-td",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
         }
-    ]
+    ],
+    "family": "dotnetcoreapp-td",
+    "executionRoleArn": "arn:aws:iam::670166063118:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "revision": 1,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "3072",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "registeredAt": "2023-03-07T14:25:49.788Z",
+    "registeredBy": "arn:aws:iam::670166063118:user/Aadinarayana.Pokuri@valuemomentum.com",
+    "tags": []
 }
-
