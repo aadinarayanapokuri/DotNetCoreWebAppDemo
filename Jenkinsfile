@@ -24,7 +24,7 @@ pipeline {
         }
   stage('Checkout') {  
    steps {
-       git credentialsId: 'github-jenkins', url: 'git@github.com:aadinarayanapokuri/DotNetCoreWebAppDemo.git', branch: 'main'
+       git credentialsId: 'github-jenkins', url: 'https://github.com/aadinarayanapokuri/DotNetCoreWebAppDemo.git', branch: 'main'
    }  
   } 
  
