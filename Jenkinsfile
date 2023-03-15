@@ -5,8 +5,8 @@ pipeline {
   AWS_ACCOUNT_ID="670166063118"
   AWS_DEFAULT_REGION="ap-northeast-1"
   IMAGE_REPO_NAME="ecr"
-  IMAGE_TAG="${DATE}.${BUILD_NUMBER}"
-  //IMAGE_TAG="23.3.30"
+  //IMAGE_TAG="${DATE}.${BUILD_NUMBER}"
+  IMAGE_TAG="23.3.30"
   REPOSITORY_URI = "670166063118.dkr.ecr.ap-northeast-1.amazonaws.com/ecr"
   AWS_ECR_REGION = 'ap-northeast-1'
   AWS_ECS_SERVICE = 'dotnetcoreapp-service'
