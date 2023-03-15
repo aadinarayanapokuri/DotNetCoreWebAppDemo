@@ -6,6 +6,7 @@ pipeline {
   AWS_DEFAULT_REGION="ap-northeast-1"
   IMAGE_REPO_NAME="ecr"
   //IMAGE_TAG="${DATE}.${BUILD_NUMBER}"
+  TAG_NAME = BUILD_NUMBER
   IMAGE_TAG="23.3.30"
   REPOSITORY_URI = "670166063118.dkr.ecr.ap-northeast-1.amazonaws.com/ecr"
   AWS_ECR_REGION = 'ap-northeast-1'
@@ -32,15 +33,30 @@ pipeline {
 stage('Docker') {
     steps {    
       script {
-          dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+         // dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+         //new changes start
+          sh """
+          echo TAG_NAME is ${TAG_NAME}
+          docker build -t ${IMAGE_REPO_NAME}:${TAG_NAME} .
+          docker tag ${IMAGE_REPO_NAME}:${TAG_NAME} ${REPOSITORY_URI}:${TAG_NAME}
+          """
+        // new changes end
         } 
         }            
         }
   stage('Pushing to ECR') {
      steps{  
          script {
-                sh """docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"""
-                sh """docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"""
+                //sh """docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"""
+                // sh """docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"""
+
+            // new changes start
+               def dockerimage="${REPOSITORY_URI}:${TAG_NAME}"
+               sh "docker push ${REPOSITORY_URI}:${TAG_NAME}"
+               sh "docker pull ${REPOSITORY_URI}:${TAG_NAME}"
+              //sh "sed -i 's|dockerimage|${dockerimage}|g' deployment.yml"
+            // new chnages end
+            
          }
         }
       }
